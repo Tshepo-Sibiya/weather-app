@@ -16,21 +16,36 @@
     </ion-item>
    
   </ion-list>
-  <button ion-button color="primary" type="submit" (click)="search()">Search</button>
-  <ion-list *ngIf="showData">
+  <button color="primary" type="submit" (click)="search()">Search</button> &nbsp;
+  <button color="primary" type="submit" (click)="reset()">Reset</button>
+  <ion-list *ngIf="showData && !_loading">
     <ion-item>
-     <label>City: {{cityObj.city}}</label>
+     <label>City: {{weather.name}}</label>
     </ion-item>
     <ion-item>
-      <label>Timezone: {{cityObj.timezone }}</label>
+      <label>Weather: {{weather.weather[0].description }}</label>
      </ion-item>
      <ion-item>
-      <label>Country: {{cityObj.country }}</label>
+      <label>Temperature: Current: {{weather.main.temp }} | Min: {{weather.main.temp_min }} | Max: {{weather.main.temp_max }}</label>
+     </ion-item>
+     <ion-item>
+      <label>Wind: Speed: {{weather.wind.speed }} | Degrees: {{weather.wind.deg}}</label>
+     </ion-item>
+    <ion-item>
+      <label>Timezone: {{weather.timezone }}</label>
+     </ion-item>
+     <ion-item>
+      <label>Country: {{weather.sys.country }}</label>
      </ion-item>
   </ion-list>
-  <ion-list *ngIf="_hasError">
-    <ion-item>
-      {{_message}}
+  <ion-list *ngIf="_hasError && !_loading">
+    <ion-item color="lime">
+      {{_err.cod}}: {{_err.message}}
+    </ion-item>
+  </ion-list>
+  <ion-list *ngIf="_loading">
+    <ion-item color="lime">
+      Loading...
     </ion-item>
   </ion-list>
 </ion-content>
